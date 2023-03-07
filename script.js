@@ -2,36 +2,36 @@ let userNumberChoices = [];
 
 
 function addNumber() {
-  // Get the user's number choice from the input field
+  // Kullanıcının seçtiği sayıları al
   let numberInput = document.getElementById("numberInput");
   let number = parseInt(numberInput.value);
 
-  // Check that the user entered a number between 1 and 49
+  // Girilen sayının 1 ve 49 arasında olup olmadığını denetle
   if (isNaN(number) || number < 1 || number > 49) {
     alert("Please enter a number between 1 and 49.");
     return;
   }
 
-  // Check that the user has not already entered this number
+  // Aynı numaranın daha önce alınıp alınmadığını denetle
   if (userNumberChoices.includes(number)) {
     alert("You have already entered this number. Please choose a different number.");
     return;
   }
 
-  // Check that the user has not already entered 6 numbers
+  // 6 numaradan fazla girilip girilmediğini denetle
   if (userNumberChoices.length >= 6) {
     alert("You have already entered 6 numbers.");
     return;
   }
 
-  // Add the user's number choice to the array and display it in the list
+  //Kullanıcının seçtiği numaraları bir diziye aktarıp listede görüntüle
   userNumberChoices.push(number);
   let numberList = document.getElementById("numberList");
   let numberItem = document.createElement("li");
   numberItem.textContent = number;
   numberList.appendChild(numberItem);
 
-  // Clear the input field for the next number
+  // Her seferinde yeni numara girişi için kutuyu temizle
   numberInput.value = "";
 
 
@@ -39,17 +39,17 @@ function addNumber() {
 }
 
 function playLottery() {
-  // Check if the user has entered 6 numbers
+  // 6 numaranın tamamlanıp tamamlanmadığını denetleyip öyle oyuna başla
   if (userNumberChoices.length != 6) {
     alert("Please enter 6 numbers first.");
     return;
   }
 
-  // Clear the old results
+  // Eski sonuçları temizle
   let resultsList = document.getElementById("resultsList");
   resultsList.innerHTML = "";
 
-  // Generate 6 unique random numbers between 1 and 49
+  // 1 ve 49 arasında birbiriyle aynı olmayan 6 sayı belirle
   let lotteryNumbers = [];
   while (lotteryNumbers.length < 6) {
     let randomNumber = Math.floor(Math.random() * 49) + 1;
@@ -58,7 +58,7 @@ function playLottery() {
     }
   }
 
-    // Sort the lottery numbers
+    // Rastgele oluşan numaraları sırala
     lotteryNumbers.sort(function(a, b) {
         return a - b;
       });
@@ -68,7 +68,7 @@ function playLottery() {
       
       
       let tutanNumaralar=[];
-      // Compare the user's numbers to the lottery numbers and count the matches
+      // Kullanıcının sayılarıyla şanslı numaraları kıyasla eşleşenleri sayıp diziye ekle göster
       let numMatches = 0;
       for (let i = 0; i < userNumberChoices.length; i++) {
         if (lotteryNumbers.includes(userNumberChoices[i])) {
@@ -77,11 +77,12 @@ function playLottery() {
           resultItem.classList.add("match");
         }
       }
+
+      // Sonuçları listele
       resultItem.textContent = "Tutan numaralar: " + tutanNumaralar.join(", ");
       resultsList.appendChild(resultItem);
 
-
-      // Display the results in the list
+      
       resultItem = document.createElement("li");
       resultItem.textContent = "Lottery numbers: " + lotteryNumbers.join(", ");
       resultsList.appendChild(resultItem);
